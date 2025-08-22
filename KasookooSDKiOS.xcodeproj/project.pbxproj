@@ -1,0 +1,469 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		068BEF44303126510998B062 /* ApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F344CBC061F5E8C0371B50 /* ApiClient.swift */; };
+		0C0894B8B97FD146D6E70EFA /* UserDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C026A46E140DB31A409A3B34 /* UserDataManager.swift */; };
+		34224588047F8684B30D9048 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258618BFDBD1488BB95F4FD9 /* LoginView.swift */; };
+		48C581073F5A75B128C8D3AE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5B90194815944BEBBA02A032 /* GoogleService-Info.plist */; };
+		4BC0D13E9EBA5FD4C9B598CC /* RingingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CB7A341B0D8FB01E80302D /* RingingView.swift */; };
+		4BC5C718DFAE168659A5D9F7 /* PushManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70683090B5E3D8307B7C1A0 /* PushManager.swift */; };
+		4E82B2C544B14D1E37C4CE26 /* LiveKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B26DB81A8E662479944A0C8 /* LiveKitManager.swift */; };
+		7B7F397FECFF35A6B457C10E /* RegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3689F0494984759442D7FED /* RegistrationView.swift */; };
+		8EA0AA11E3C88E6D57439BAE /* AppStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66F3AEEC879234203BF9208 /* AppStyle.swift */; };
+		9D320A4382EA97005434DECF /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 245D9C7A6431D407C4599BF0 /* FirebaseMessaging */; };
+		A2D64828F750E0AE65C0D16A /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBCAA160C4A0C6031B6E8BC /* MainView.swift */; };
+		D0D366571B945884215944DB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF287187217545B98C53646A /* AppDelegate.swift */; };
+		D9099F5B7332FF22A4DAF82E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 984EB66A3E6F0F3958475285 /* Assets.xcassets */; };
+		DDF6C9758E4BC7E2AC8F40AA /* LiveKit in Frameworks */ = {isa = PBXBuildFile; productRef = 3F702826DFC78AAC89483533 /* LiveKit */; };
+		E977FCA1C1D8404AEF701E55 /* CallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5E5D8B501BC0FB1BEC1113 /* CallView.swift */; };
+		EA6243F603E0E6A5BA3846C2 /* RootRouterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EA78E261F400FFDDA4F908 /* RootRouterView.swift */; };
+		F02F2FB4A674F6770CCC38D8 /* KasookooSDKiOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDECF8D13D7E391B493928C /* KasookooSDKiOSApp.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0B26DB81A8E662479944A0C8 /* LiveKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveKitManager.swift; sourceTree = "<group>"; };
+		258618BFDBD1488BB95F4FD9 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		25CB7A341B0D8FB01E80302D /* RingingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingingView.swift; sourceTree = "<group>"; };
+		29F344CBC061F5E8C0371B50 /* ApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiClient.swift; sourceTree = "<group>"; };
+		2A0E84DA0C4680CFB87D70BB /* KasookooSDKiOS.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = KasookooSDKiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2FD01A943A9474E6104EE964 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		5B90194815944BEBBA02A032 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		6B5E5D8B501BC0FB1BEC1113 /* CallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallView.swift; sourceTree = "<group>"; };
+		984EB66A3E6F0F3958475285 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C026A46E140DB31A409A3B34 /* UserDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataManager.swift; sourceTree = "<group>"; };
+		C66F3AEEC879234203BF9208 /* AppStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStyle.swift; sourceTree = "<group>"; };
+		D3689F0494984759442D7FED /* RegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationView.swift; sourceTree = "<group>"; };
+		D9EA78E261F400FFDDA4F908 /* RootRouterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootRouterView.swift; sourceTree = "<group>"; };
+		DBBCAA160C4A0C6031B6E8BC /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		DCDECF8D13D7E391B493928C /* KasookooSDKiOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KasookooSDKiOSApp.swift; sourceTree = "<group>"; };
+		EF287187217545B98C53646A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		F70683090B5E3D8307B7C1A0 /* PushManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushManager.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2A0217EF1813DA88F6E79CB5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9D320A4382EA97005434DECF /* FirebaseMessaging in Frameworks */,
+				DDF6C9758E4BC7E2AC8F40AA /* LiveKit in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0A0E3EE5E9C3717DC76E4706 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				0B26DB81A8E662479944A0C8 /* LiveKitManager.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		2080DD9F915371AEB62C2839 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				29F344CBC061F5E8C0371B50 /* ApiClient.swift */,
+				C026A46E140DB31A409A3B34 /* UserDataManager.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		2983380B64FE85A7B921DECF /* KasookooSDKiOS */ = {
+			isa = PBXGroup;
+			children = (
+				5B90194815944BEBBA02A032 /* GoogleService-Info.plist */,
+				2FD01A943A9474E6104EE964 /* Info.plist */,
+				3CE042FBECD02EB3D59FF792 /* App */,
+				0A0E3EE5E9C3717DC76E4706 /* Core */,
+				2080DD9F915371AEB62C2839 /* Data */,
+				9C60E67A47B666C14F4866AF /* Push */,
+				AF6FBB9AA39EDCA461141E9C /* UI */,
+			);
+			name = KasookooSDKiOS;
+			path = Sources/KasookooSDKiOS;
+			sourceTree = "<group>";
+		};
+		3CE042FBECD02EB3D59FF792 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				EF287187217545B98C53646A /* AppDelegate.swift */,
+				984EB66A3E6F0F3958475285 /* Assets.xcassets */,
+				DCDECF8D13D7E391B493928C /* KasookooSDKiOSApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		9C60E67A47B666C14F4866AF /* Push */ = {
+			isa = PBXGroup;
+			children = (
+				F70683090B5E3D8307B7C1A0 /* PushManager.swift */,
+			);
+			path = Push;
+			sourceTree = "<group>";
+		};
+		9EF4B9CBE0E716BBD0B159E4 /* DesignSystem */ = {
+			isa = PBXGroup;
+			children = (
+				C66F3AEEC879234203BF9208 /* AppStyle.swift */,
+			);
+			path = DesignSystem;
+			sourceTree = "<group>";
+		};
+		AF6FBB9AA39EDCA461141E9C /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				6B5E5D8B501BC0FB1BEC1113 /* CallView.swift */,
+				258618BFDBD1488BB95F4FD9 /* LoginView.swift */,
+				DBBCAA160C4A0C6031B6E8BC /* MainView.swift */,
+				D3689F0494984759442D7FED /* RegistrationView.swift */,
+				25CB7A341B0D8FB01E80302D /* RingingView.swift */,
+				D9EA78E261F400FFDDA4F908 /* RootRouterView.swift */,
+				9EF4B9CBE0E716BBD0B159E4 /* DesignSystem */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		D3BAF805704099994BFB49A2 = {
+			isa = PBXGroup;
+			children = (
+				2983380B64FE85A7B921DECF /* KasookooSDKiOS */,
+				DA4ADFCB8C9AA6C93A5D1C60 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		DA4ADFCB8C9AA6C93A5D1C60 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2A0E84DA0C4680CFB87D70BB /* KasookooSDKiOS.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D3430DD656745B2931B65B14 /* KasookooSDKiOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F7FB708E11F01DC3D29E9353 /* Build configuration list for PBXNativeTarget "KasookooSDKiOS" */;
+			buildPhases = (
+				ED1ECD3995870765D2DA9344 /* Sources */,
+				C7E317109D964155B3F6D9CD /* Resources */,
+				2A0217EF1813DA88F6E79CB5 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = KasookooSDKiOS;
+			packageProductDependencies = (
+				245D9C7A6431D407C4599BF0 /* FirebaseMessaging */,
+				3F702826DFC78AAC89483533 /* LiveKit */,
+			);
+			productName = KasookooSDKiOS;
+			productReference = 2A0E84DA0C4680CFB87D70BB /* KasookooSDKiOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		161D8085D9521418A34D75E6 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					D3430DD656745B2931B65B14 = {
+						DevelopmentTeam = V9646H2WFV;
+						ProvisioningStyle = Manual;
+					};
+				};
+			};
+			buildConfigurationList = 920182FFF95C622C041C7FC7 /* Build configuration list for PBXProject "KasookooSDKiOS" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = D3BAF805704099994BFB49A2;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				403BAB0EE1CEBFA9860A139F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				A14964AAB58F1F5EBC51F968 /* XCRemoteSwiftPackageReference "client-sdk-swift" */,
+			);
+			preferredProjectObjectVersion = 77;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D3430DD656745B2931B65B14 /* KasookooSDKiOS */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C7E317109D964155B3F6D9CD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9099F5B7332FF22A4DAF82E /* Assets.xcassets in Resources */,
+				48C581073F5A75B128C8D3AE /* GoogleService-Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		ED1ECD3995870765D2DA9344 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				068BEF44303126510998B062 /* ApiClient.swift in Sources */,
+				D0D366571B945884215944DB /* AppDelegate.swift in Sources */,
+				8EA0AA11E3C88E6D57439BAE /* AppStyle.swift in Sources */,
+				E977FCA1C1D8404AEF701E55 /* CallView.swift in Sources */,
+				F02F2FB4A674F6770CCC38D8 /* KasookooSDKiOSApp.swift in Sources */,
+				4E82B2C544B14D1E37C4CE26 /* LiveKitManager.swift in Sources */,
+				34224588047F8684B30D9048 /* LoginView.swift in Sources */,
+				A2D64828F750E0AE65C0D16A /* MainView.swift in Sources */,
+				4BC5C718DFAE168659A5D9F7 /* PushManager.swift in Sources */,
+				7B7F397FECFF35A6B457C10E /* RegistrationView.swift in Sources */,
+				4BC0D13E9EBA5FD4C9B598CC /* RingingView.swift in Sources */,
+				EA6243F603E0E6A5BA3846C2 /* RootRouterView.swift in Sources */,
+				0C0894B8B97FD146D6E70EFA /* UserDataManager.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		16A2C315CC18AFF26681ED59 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = KasookooSDKiOS.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = V9646H2WFV;
+				INFOPLIST_FILE = Sources/KasookooSDKiOS/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.kasookoo.ios;
+				PROVISIONING_PROFILE = "8acbd994-1423-430b-bb50-b028f26661d1";
+				PROVISIONING_PROFILE_SPECIFIER = Kasookoovasyl;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		6C6582BF297C5FB5DA432959 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = KasookooSDKiOS.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = V9646H2WFV;
+				INFOPLIST_FILE = Sources/KasookooSDKiOS/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.kasookoo.ios;
+				PROVISIONING_PROFILE = "8acbd994-1423-430b-bb50-b028f26661d1";
+				PROVISIONING_PROFILE_SPECIFIER = Kasookoovasyl;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		C259318449FFDC2F9412A1A0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		E4E11F9A910754BDCDA597B1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		920182FFF95C622C041C7FC7 /* Build configuration list for PBXProject "KasookooSDKiOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E4E11F9A910754BDCDA597B1 /* Debug */,
+				C259318449FFDC2F9412A1A0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		F7FB708E11F01DC3D29E9353 /* Build configuration list for PBXNativeTarget "KasookooSDKiOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				16A2C315CC18AFF26681ED59 /* Debug */,
+				6C6582BF297C5FB5DA432959 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		403BAB0EE1CEBFA9860A139F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.29.0;
+			};
+		};
+		A14964AAB58F1F5EBC51F968 /* XCRemoteSwiftPackageReference "client-sdk-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/livekit/client-sdk-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		245D9C7A6431D407C4599BF0 /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 403BAB0EE1CEBFA9860A139F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
+		3F702826DFC78AAC89483533 /* LiveKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A14964AAB58F1F5EBC51F968 /* XCRemoteSwiftPackageReference "client-sdk-swift" */;
+			productName = LiveKit;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 161D8085D9521418A34D75E6 /* Project object */;
+}

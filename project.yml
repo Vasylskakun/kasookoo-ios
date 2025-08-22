@@ -1,0 +1,36 @@
+name: KasookooSDKiOS
+options:
+  minimumXcodeGenVersion: 2.37.0
+  deploymentTarget:
+    iOS: "15.0"
+targets:
+  KasookooSDKiOS:
+    type: application
+    platform: iOS
+    deploymentTarget: "15.0"
+    sources:
+      - path: Sources/KasookooSDKiOS
+    dependencies:
+      - package: Firebase
+        product: FirebaseMessaging
+      - package: LiveKit
+        product: LiveKit
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.kasookoo.ios
+        SWIFT_VERSION: 5.9
+        INFOPLIST_FILE: Sources/KasookooSDKiOS/Info.plist
+        CODE_SIGN_ENTITLEMENTS: KasookooSDKiOS.entitlements
+        DEVELOPMENT_TEAM: V9646H2WFV
+        CODE_SIGN_STYLE: Manual
+        CODE_SIGN_IDENTITY: Apple Development
+        PROVISIONING_PROFILE_SPECIFIER: Kasookoovasyl
+        PROVISIONING_PROFILE: 8acbd994-1423-430b-bb50-b028f26661d1
+    postbuildScripts: []
+packages:
+  LiveKit:
+    url: https://github.com/livekit/client-sdk-swift
+    from: 1.0.0
+  Firebase:
+    url: https://github.com/firebase/firebase-ios-sdk
+    from: 10.29.0
