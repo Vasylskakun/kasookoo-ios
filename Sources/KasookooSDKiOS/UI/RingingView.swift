@@ -104,6 +104,7 @@ struct RingingView: View {
                             .onTapGesture { UIImpactFeedbackGenerator(style: .medium).impactOccurred() }
 
                             Button {
+                                print("✅ ACCEPT BUTTON: Tapped! Starting call flow...")
                                 shouldAutoNavigate = true
                                 stopRingingSound() // Stop ringing when accepting
                                 Task { await startLiveKit() }
@@ -127,8 +128,12 @@ struct RingingView: View {
             .navigationBarHidden(true)
         }
         .task {
+            // Debug logging
+            print("🔔 RINGING VIEW: Initialized - isDialer=\(isDialer), roomName=\(pushRoomName ?? "nil"), callerName=\(pushCallerName ?? "nil")")
+
             // Start ringing sound for incoming calls
             startRingingSound()
+            print("🔊 RINGING SOUND: Started for incoming call")
 
             // Auto-start for dialer
             if isSupportCall {
@@ -197,13 +202,17 @@ struct RingingView: View {
     }
     
     func startLiveKit() async {
+        print("🚀 START_LIVEKIT: Beginning call connection process...")
         isLoading = true
         defer { isLoading = false }
         guard let userId = UserDataManager.shared.userId,
               let userType = UserDataManager.shared.userType else {
+            print("❌ START_LIVEKIT: Missing user data")
             errorText = "Missing user"
             return
         }
+
+        print("👤 START_LIVEKIT: User data - ID: \(userId), Type: \(userType)")
         let identityName = UserDataManager.shared.fullName ?? userId
         do {
             // If this is a support call, MainView handled connection; don't fetch any token here.
@@ -233,13 +242,16 @@ struct RingingView: View {
                     participant_identity_type: userType,
                     called_user_id: userId
                 )
+                print("📡 START_LIVEKIT: Requesting called token for room: \(roomName)")
                 let token = try await ApiClient.shared.getCalledToken(req)
+                print("✅ START_LIVEKIT: Token received, connecting to room...")
                 try await LiveKitManager.shared.connectToRoom(token: token.accessToken, wsUrl: token.wsUrl, roomName: token.roomName ?? roomName, callType: (userType.lowercased() == "customer" ? .customer : .driver))
             }
             // For callee (incoming calls): navigate immediately after connecting
             // For dialer (outgoing calls): wait for remote participant to join
             if !isDialer {
                 // Callee: go to in-call screen immediately
+                print("📞 START_LIVEKIT: Incoming call accepted, navigating to call screen...")
                 await MainActor.run { connect = true }
             } else {
                 // Dialer: wait for remote participant to join

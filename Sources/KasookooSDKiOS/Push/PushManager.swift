@@ -42,6 +42,8 @@ final class PushManager {
     //   called_user_id: "<callee_id>"
     // }
     func handle(userInfo: [AnyHashable: Any]) {
+        print("🔔 PUSH RECEIVED: userInfo keys = \(userInfo.keys)")
+        print("🔔 PUSH RECEIVED: full userInfo = \(userInfo)")
         // Extract custom data either from top-level or nested under "data"
         var custom: [String: Any] = [:]
         if let nested = userInfo["data"] as? [String: Any] {
@@ -99,12 +101,17 @@ final class PushManager {
             return
         }
 
+        print("🎯 PUSH ACTION: \(normalizedAction)")
+
         switch normalizedAction {
         case "incoming_call":
+            print("📞 POSTING incoming_call notification with payload: \(payload)")
             NotificationCenter.default.post(name: Notification.Name("incoming_call"), object: nil, userInfo: payload)
         case "call_cancelled":
+            print("❌ POSTING call_cancelled notification")
             NotificationCenter.default.post(name: Notification.Name("call_cancelled"), object: nil, userInfo: payload)
         default:
+            print("⚪ Ignoring action: \(normalizedAction)")
             break
         }
     }

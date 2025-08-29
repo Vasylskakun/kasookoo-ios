@@ -25,13 +25,30 @@ struct RootRouterView: View {
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name("incoming_call")).receive(on: RunLoop.main)) { note in
             let userInfo = note.userInfo ?? [:]
             let room = (userInfo["room_name"] as? String)
+
+            // Debug logging
+            print("📱 INCOMING_CALL received: room=\(room ?? "nil"), userInfo keys: \(userInfo.keys)")
+
             // Determine UI role to show based on our saved userType, not only payload hints
             let localUserType = (UserDataManager.shared.userType ?? "customer").lowercased()
             // The counterpart role is opposite of local: customer sees driver, driver sees customer
             incomingIsCustomer = (localUserType == "customer")
             incomingRoom = room
             incomingCallerName = (userInfo["participant_identity_name"] as? String)
-            presentIncoming = true
+
+            // Ensure we have required data
+            guard room != nil else {
+                print("❌ INCOMING_CALL: Missing room_name")
+                return
+            }
+
+            print("✅ INCOMING_CALL: Setting up incoming call - room: \(room!), isCustomer: \(incomingIsCustomer)")
+
+            // Use DispatchQueue.main.asyncAfter to ensure UI is ready
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                presentIncoming = true
+                print("📞 INCOMING_CALL: Sheet should now be presented")
+            }
         }
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name("call_cancelled")).receive(on: RunLoop.main)) { _ in
             // Dismiss incoming sheet if the caller cancelled before we accepted
