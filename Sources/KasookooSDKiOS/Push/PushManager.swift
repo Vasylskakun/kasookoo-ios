@@ -55,10 +55,15 @@ final class PushManager {
             custom = userInfo.reduce(into: [:]) { $0[String(describing: $1.key)] = $1.value }
         }
 
+        print("📦 PUSH CUSTOM DATA: \(custom)")
+
         // Infer action from explicit action key, or from type when present
         let rawAction = (custom["action"] as? String) ?? (userInfo["action"] as? String)
         let typeHint = ((custom["type"] as? String) ?? (userInfo["type"] as? String))?.lowercased() ?? ""
         let action = rawAction ?? (typeHint.contains("incoming_call") ? "incoming_call" : (typeHint.contains("cancel") ? "call_cancelled" : ""))
+
+        print("🎯 PUSH ACTION DEBUG: rawAction='\(rawAction ?? "nil")', typeHint='\(typeHint)', inferred action='\(action)'")
+
         let normalizedAction: String
         switch action.lowercased() {
         case "incoming_call", "receive_call":
@@ -68,6 +73,8 @@ final class PushManager {
         default:
             normalizedAction = action
         }
+
+        print("✅ PUSH NORMALIZED ACTION: '\(normalizedAction)'")
 
         // Build a normalized payload for UI layers
         var payload: [String: Any] = userInfo.reduce(into: [:]) { $0[String(describing: $1.key)] = $1.value }
@@ -85,21 +92,33 @@ final class PushManager {
         let callerUserId = (custom["caller_user_id"] as? String) ?? (payload["caller_user_id"] as? String)
         let typeString = ((custom["type"] as? String) ?? (userInfo["type"] as? String))?.lowercased() ?? ""
 
+        print("🔍 PUSH FILTER DEBUG: localUserId='\(localUserId ?? "nil")', localUserType='\(localUserType ?? "nil")'")
+        print("🔍 PUSH FILTER DEBUG: calledUserId='\(calledUserId ?? "nil")', callerUserId='\(callerUserId ?? "nil")'")
+        print("🔍 PUSH FILTER DEBUG: typeString='\(typeString)', normalizedAction='\(normalizedAction)'")
+
         // Ignore if explicitly targeted to a different callee
         if let localUserId, let calledUserId, calledUserId.isEmpty == false, calledUserId != localUserId {
+            print("❌ PUSH FILTER: Ignoring - called_user_id doesn't match local user")
             return
         }
         // Ignore mirrored notifications sent to the caller themselves
         if normalizedAction == "incoming_call", let localUserId, let callerUserId, callerUserId == localUserId {
+            print("❌ PUSH FILTER: Ignoring - mirrored notification to caller")
             return
         }
         // If type hints at role-specific incoming call, ensure our local role matches
-        if typeString.contains("driver_incoming_call"), let localUserType, localUserType != "driver" {
+        // customer_incoming_call means a customer is calling, so recipient should be driver
+        // driver_incoming_call means a driver is calling, so recipient should be customer
+        if typeString.contains("customer_incoming_call"), let localUserType, localUserType != "driver" {
+            print("❌ PUSH FILTER: Ignoring - customer_incoming_call but user is not driver (should receive customer calls)")
             return
         }
-        if typeString.contains("customer_incoming_call"), let localUserType, localUserType != "customer" {
+        if typeString.contains("driver_incoming_call"), let localUserType, localUserType != "customer" {
+            print("❌ PUSH FILTER: Ignoring - driver_incoming_call but user is not customer (should receive driver calls)")
             return
         }
+
+        print("✅ PUSH FILTER: Passed all filters, proceeding...")
 
         print("🎯 PUSH ACTION: \(normalizedAction)")
 
