@@ -88,7 +88,15 @@ struct MainView: View {
                                         isLoading: false,
                                         action: {
                                             callStatus = nil
-                                            showCallDriver = true
+                                            // Notify RootRouterView to show outgoing call screen
+                                            NotificationCenter.default.post(
+                                                name: Notification.Name("outgoing_call_initiated"),
+                                                object: nil,
+                                                userInfo: [
+                                                    "isCustomer": true,
+                                                    "isSupportCall": false
+                                                ]
+                                            )
                                         }
                                     )
 
@@ -101,7 +109,16 @@ struct MainView: View {
                                         buttonText: placingCall ? "Calling..." : "Call Support",
                                         isLoading: placingCall,
                                         action: {
-                                            Task { await callSupport() }
+                                            callStatus = nil
+                                            // Notify RootRouterView to show outgoing call screen
+                                            NotificationCenter.default.post(
+                                                name: Notification.Name("outgoing_call_initiated"),
+                                                object: nil,
+                                                userInfo: [
+                                                    "isCustomer": true,
+                                                    "isSupportCall": true
+                                                ]
+                                            )
                                         }
                                     )
                                 }
@@ -116,7 +133,15 @@ struct MainView: View {
                                     isLoading: false,
                                     action: {
                                         callStatus = nil
-                                        showCallCustomer = true
+                                        // Notify RootRouterView to show outgoing call screen
+                                        NotificationCenter.default.post(
+                                            name: Notification.Name("outgoing_call_initiated"),
+                                            object: nil,
+                                            userInfo: [
+                                                "isCustomer": false,
+                                                "isSupportCall": false
+                                            ]
+                                        )
                                     }
                                 )
                             }
@@ -141,10 +166,7 @@ struct MainView: View {
                         Spacer(minLength: 40)
                     }
                 }
-                // Hidden navigators for programmatic control
-                NavigationLink(destination: RingingView(isCustomer: true, isDialer: true, pushRoomName: nil, isSupportCall: true).navigationBarHidden(true), isActive: $showSupportCalling) { EmptyView() }
-                NavigationLink(destination: RingingView(isCustomer: true, isDialer: true, pushRoomName: nil, isSupportCall: false).navigationBarHidden(true), isActive: $showCallDriver) { EmptyView() }
-                NavigationLink(destination: RingingView(isCustomer: false, isDialer: true, pushRoomName: nil, isSupportCall: false).navigationBarHidden(true), isActive: $showCallCustomer) { EmptyView() }
+                // Navigation is now handled by RootRouterView via notifications
             }
         }
     }

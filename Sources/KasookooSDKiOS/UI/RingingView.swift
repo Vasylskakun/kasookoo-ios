@@ -16,7 +16,6 @@ struct RingingView: View {
     var autoAccept: Bool = false
     @Environment(\.dismiss) private var dismiss
     @Environment(\.presentationMode) private var presentationMode
-    @State private var connect = false
     @State private var isLoading = false
     @State private var errorText: String?
     @State private var didAutoStart = false
@@ -94,7 +93,6 @@ struct RingingView: View {
                             Button {
                                 shouldAutoNavigate = false
                                 stopRingingSound() // Stop ringing when declining
-                                connect = false
                                 Task { await LiveKitManager.shared.disconnect() }
                             } label: {
                                 Image(systemName: "phone.down.fill")
@@ -119,7 +117,7 @@ struct RingingView: View {
                         }
                     }
 
-                    NavigationLink(destination: CallView(isCustomer: isCustomer), isActive: $connect) { EmptyView() }
+                    // Navigation is now handled by RootRouterView with fullScreenCover
                     if let error = errorText { Text(error).foregroundColor(.white).font(.footnote) }
 
                     Spacer(minLength: 16)
@@ -143,7 +141,10 @@ struct RingingView: View {
                 for _ in 0..<attempts {
                     if shouldAutoNavigate,
                        let room = LiveKitManager.shared.room, room.remoteParticipants.isEmpty == false {
-                        await MainActor.run { connect = true }
+                        await MainActor.run {
+                            // Navigation is handled by RootRouterView via notifications
+                            print("📞 REMOTE_JOINED: Navigation handled by RootRouterView")
+                        }
                         break
                     }
                     try? await Task.sleep(nanoseconds: 500_000_000)
@@ -160,7 +161,6 @@ struct RingingView: View {
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name("call_ended")).receive(on: DispatchQueue.main)) { _ in
             // Ensure we pop back to MainView when the call ends
             shouldAutoNavigate = false
-            connect = false
             // Dismiss self if still visible
             if presentationMode.wrappedValue.isPresented {
                 presentationMode.wrappedValue.dismiss()
@@ -169,14 +169,13 @@ struct RingingView: View {
             }
         }
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name("lk_remote_joined")).receive(on: DispatchQueue.main)) { _ in
-            // Remote participant joined: go to in-call immediately
-            if shouldAutoNavigate { connect = true }
+            // Remote participant joined: navigation is handled by RootRouterView
+            print("📞 REMOTE_JOINED: Remote participant joined, navigation handled by RootRouterView")
         }
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name("call_cancelled")).receive(on: DispatchQueue.main)) { _ in
             // If caller cancels while we're on ring screen, go back
             shouldAutoNavigate = false
             stopRingingSound() // Stop ringing when call is cancelled
-            connect = false
             if presentationMode.wrappedValue.isPresented {
                 presentationMode.wrappedValue.dismiss()
             } else {
@@ -184,20 +183,18 @@ struct RingingView: View {
             }
         }
         .onDisappear {
-            // Ensure we don't leave the ring view hanging as active
-            connect = false
-            stopRingingSound() // Clean up ringing sound
+            // Clean up ringing sound
+            stopRingingSound()
         }
         // Safety net: periodically check for remote participant joined
         .onReceive(Timer.publish(every: 0.5, on: .main, in: .common).autoconnect()) { _ in
-            if shouldAutoNavigate, connect == false, LiveKitManager.shared.hasRemoteParticipants {
-                connect = true
+            if shouldAutoNavigate, LiveKitManager.shared.hasRemoteParticipants {
+                print("⏰ TIMER_CHECK: Remote participant detected, navigation handled by RootRouterView")
             }
         }
         // If End Call is tapped elsewhere, stop any auto-navigation
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name("call_ending")).receive(on: DispatchQueue.main)) { _ in
             shouldAutoNavigate = false
-            connect = false
         }
     }
     
@@ -253,21 +250,34 @@ struct RingingView: View {
                 // Callee: go to in-call screen immediately
                 print("📞 START_LIVEKIT: Incoming call accepted, navigating to call screen...")
                 await MainActor.run {
-                    connect = true
-                    // Notify that we've accepted the incoming call
+                    // Notify that we've accepted the incoming call - navigation handled by RootRouterView
                     NotificationCenter.default.post(name: Notification.Name("incoming_call_accepted"), object: nil)
                 }
             } else {
-                // Dialer: wait for remote participant to join
-                let attempts = 120 // up to ~60s for all flows
-                let sleepNs: UInt64 = 500_000_000
-                for _ in 0..<attempts {
-                    if shouldAutoNavigate,
-                       let room = LiveKitManager.shared.room, room.remoteParticipants.isEmpty == false {
-                        await MainActor.run { connect = true }
-                        break
+                // Dialer: handle outgoing calls
+                if isSupportCall {
+                    // Support calls connect immediately
+                    print("📞 SUPPORT_CALL_CONNECTED: Support call connected immediately")
+                    await MainActor.run {
+                        NotificationCenter.default.post(name: Notification.Name("outgoing_call_connected"), object: nil)
                     }
-                    try? await Task.sleep(nanoseconds: sleepNs)
+                } else {
+                    // Regular outgoing calls - wait for remote participant to join
+                    print("📞 DIALER_WAITING: Waiting for remote participant to join...")
+                    let attempts = 120 // up to ~60s for all flows
+                    let sleepNs: UInt64 = 500_000_000
+                    for _ in 0..<attempts {
+                        if shouldAutoNavigate,
+                           let room = LiveKitManager.shared.room, room.remoteParticipants.isEmpty == false {
+                            await MainActor.run {
+                                // Notify RootRouterView that outgoing call connected
+                                NotificationCenter.default.post(name: Notification.Name("outgoing_call_connected"), object: nil)
+                                print("📞 DIALER_CONNECTED: Remote participant joined, notified RootRouterView")
+                            }
+                            break
+                        }
+                        try? await Task.sleep(nanoseconds: sleepNs)
+                    }
                 }
             }
         } catch {
