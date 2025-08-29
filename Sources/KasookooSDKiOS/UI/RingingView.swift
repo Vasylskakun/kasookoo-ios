@@ -1,5 +1,6 @@
 import SwiftUI
 import UIKit
+import AVFoundation
 
 struct RingingView: View {
     let isCustomer: Bool
@@ -20,6 +21,8 @@ struct RingingView: View {
     @State private var errorText: String?
     @State private var didAutoStart = false
     @State private var shouldAutoNavigate = true
+    @State private var ringingPlayer: AVAudioPlayer?
+    @State private var isRinging = false
 
     var body: some View {
         GeometryReader { geo in
@@ -40,7 +43,7 @@ struct RingingView: View {
                         .padding(.horizontal)
 
                     ZStack {
-                        PulsingRings(color: .white, baseDiameter: ringBase)
+                        ModernPulsingRings(color: .white, baseDiameter: ringBase)
                         Circle().fill(Color.white.opacity(0.12)).frame(width: avatar, height: avatar)
                             .overlay(Circle().stroke(Color.white.opacity(0.3), lineWidth: 4))
                             .overlay(
@@ -81,29 +84,35 @@ struct RingingView: View {
                             shouldAutoNavigate = false
                             Task { await LiveKitManager.shared.disconnect() }
                         } label: {
-                            Image(systemName: "phone.down.fill").font(.system(size: max(16, min(24, 22 * scale)), weight: .bold))
+                            Image(systemName: "phone.down.fill")
+                                .font(.system(size: max(20, min(28, 24 * scale)), weight: .bold))
                         }
-                        .buttonStyle(RoundButtonStyle(diameter: endSize, fill: AppColors.red, foreground: .white))
+                        .buttonStyle(CallButtonStyle(style: .end))
                         .onTapGesture { UIImpactFeedbackGenerator(style: .medium).impactOccurred() }
                     } else {
-                        HStack(spacing: max(24, min(48, 36 * scale))) {
+                        HStack(spacing: max(32, min(64, 48 * scale))) {
                             Button {
                                 shouldAutoNavigate = false
+                                stopRingingSound() // Stop ringing when declining
                                 connect = false
                                 Task { await LiveKitManager.shared.disconnect() }
                             } label: {
-                                Image(systemName: "phone.down.fill").font(.system(size: max(16, min(24, 20 * scale)), weight: .bold))
+                                Image(systemName: "phone.down.fill")
+                                    .font(.system(size: max(20, min(28, 24 * scale)), weight: .bold))
                             }
-                            .buttonStyle(RoundButtonStyle(diameter: max(52, min(72, 60 * scale)), fill: AppColors.red, foreground: .white))
+                            .buttonStyle(CallButtonStyle(style: .decline))
                             .onTapGesture { UIImpactFeedbackGenerator(style: .medium).impactOccurred() }
 
                             Button {
                                 shouldAutoNavigate = true
+                                stopRingingSound() // Stop ringing when accepting
                                 Task { await startLiveKit() }
                             } label: {
-                                Image(systemName: "phone.fill").rotationEffect(.degrees(135)).font(.system(size: max(16, min(24, 20 * scale)), weight: .bold))
+                                Image(systemName: "phone.fill")
+                                    .rotationEffect(.degrees(135))
+                                    .font(.system(size: max(20, min(28, 24 * scale)), weight: .bold))
                             }
-                            .buttonStyle(RoundButtonStyle(diameter: max(52, min(72, 60 * scale)), fill: AppColors.green, foreground: .white))
+                            .buttonStyle(CallButtonStyle(style: .accept))
                             .disabled(isLoading)
                             .onTapGesture { UISelectionFeedbackGenerator().selectionChanged() }
                         }
@@ -118,6 +127,9 @@ struct RingingView: View {
             .navigationBarHidden(true)
         }
         .task {
+            // Start ringing sound for incoming calls
+            startRingingSound()
+
             // Auto-start for dialer
             if isSupportCall {
                 // Ensure we never trigger caller/called token for support
@@ -158,6 +170,7 @@ struct RingingView: View {
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name("call_cancelled")).receive(on: DispatchQueue.main)) { _ in
             // If caller cancels while we're on ring screen, go back
             shouldAutoNavigate = false
+            stopRingingSound() // Stop ringing when call is cancelled
             connect = false
             if presentationMode.wrappedValue.isPresented {
                 presentationMode.wrappedValue.dismiss()
@@ -168,6 +181,7 @@ struct RingingView: View {
         .onDisappear {
             // Ensure we don't leave the ring view hanging as active
             connect = false
+            stopRingingSound() // Clean up ringing sound
         }
         // Safety net: periodically check for remote participant joined
         .onReceive(Timer.publish(every: 0.5, on: .main, in: .common).autoconnect()) { _ in
@@ -256,6 +270,50 @@ struct RingingView: View {
                 errorText = "Failed to connect: \(error.localizedDescription)"
             }
         }
+    }
+
+    private func startRingingSound() {
+        guard !isDialer && !isRinging else { return } // Only ring for incoming calls
+
+        do {
+            // Try to load a default system sound or create a simple tone
+            // For now, we'll use a simple beep-like sound
+            let soundURL = URL(fileURLWithPath: "/System/Library/Audio/UISounds/nano/ReceivedMessage.caf")
+
+            if FileManager.default.fileExists(atPath: soundURL.path) {
+                ringingPlayer = try AVAudioPlayer(contentsOf: soundURL)
+            } else {
+                // Fallback: create a simple tone programmatically
+                createRingingTone()
+            }
+
+            ringingPlayer?.numberOfLoops = -1 // Loop indefinitely
+            ringingPlayer?.volume = 0.8
+            ringingPlayer?.play()
+            isRinging = true
+        } catch {
+            print("Could not start ringing sound: \(error)")
+            // Still show the UI even if sound fails
+        }
+    }
+
+    private func createRingingTone() {
+        // Create a simple ringing tone using system beep
+        // This is a fallback when system sounds aren't available
+        let soundID: SystemSoundID = 1005 // System sound for incoming call-like notification
+        AudioServicesPlaySystemSound(soundID)
+        isRinging = true
+    }
+
+    private func stopRingingSound() {
+        guard isRinging else { return }
+
+        ringingPlayer?.stop()
+        ringingPlayer = nil
+        isRinging = false
+
+        // Also stop system sound if used
+        AudioServicesDisposeSystemSoundID(1005)
     }
 }
 // MARK: - Labels
