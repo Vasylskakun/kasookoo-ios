@@ -29,6 +29,15 @@ final class LiveKitManager {
         currentCallType = callType
         currentRoomName = roomName
 
+        // Post call_started notification to track active room
+        DispatchQueue.main.async {
+            NotificationCenter.default.post(
+                name: Notification.Name("call_started"),
+                object: nil,
+                userInfo: ["room_name": roomName]
+            )
+        }
+
         // Ensure microphone permission and then enable mic
         let granted = await ensureRecordPermission()
         if granted {

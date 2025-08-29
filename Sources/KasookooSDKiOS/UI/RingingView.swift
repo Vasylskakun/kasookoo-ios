@@ -252,7 +252,11 @@ struct RingingView: View {
             if !isDialer {
                 // Callee: go to in-call screen immediately
                 print("📞 START_LIVEKIT: Incoming call accepted, navigating to call screen...")
-                await MainActor.run { connect = true }
+                await MainActor.run {
+                    connect = true
+                    // Notify that we've accepted the incoming call
+                    NotificationCenter.default.post(name: Notification.Name("incoming_call_accepted"), object: nil)
+                }
             } else {
                 // Dialer: wait for remote participant to join
                 let attempts = 120 // up to ~60s for all flows
